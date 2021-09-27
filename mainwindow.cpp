@@ -51,3 +51,36 @@ void MainWindow::on_Mesh_Button_clicked()
     Mesh_Process.waitForFinished(-1);
 }
 
+
+void MainWindow::on_CheckBleDir_Button_clicked()
+{
+    QFile file("Blender_Directory.txt");
+    if(!file.exists())
+    {
+        qCritical() << "Directory not found, set a directory first";
+    }
+
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        qCritical() << file.errorString();
+    }
+    QTextStream stream(&file);
+    QMessageBox msgBox;
+    msgBox.setText("Your current Blender Directory is:");
+    msgBox.setInformativeText(stream.readAll());
+    msgBox.exec();
+}
+
+
+void MainWindow::on_SetBleDir_Button_clicked()
+{
+    QFile file("Blender_Directory.txt");
+    if(!file.open(QIODevice::WriteOnly))
+    {
+        qCritical() << file.errorString();
+    }
+    QTextStream stream(&file);
+    stream << ui->BleDir->text();
+    file.close();
+}
+

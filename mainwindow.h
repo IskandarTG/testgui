@@ -4,8 +4,11 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QLineEdit>
+#include <QFile>
+#include <QTextStream>
 #include <QProcess>
 #include <QDir>
+#include <QDebug>
 
 
 QT_BEGIN_NAMESPACE
@@ -26,6 +29,10 @@ private slots:
     void on_CheckProjectDir_Button_clicked();
     void on_SetProjectDir_Button_clicked();
     void on_Mesh_Button_clicked();
+
+    void on_CheckBleDir_Button_clicked();
+
+    void on_SetBleDir_Button_clicked();
 
 private:
     Ui::MainWindow *ui;
