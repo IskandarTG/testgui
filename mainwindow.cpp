@@ -40,6 +40,7 @@ void MainWindow::on_SetProjectDir_Button_clicked()
 
 void MainWindow::on_Mesh_Button_clicked()
 {
+    /*
     QProcess Mesh_Process;
     ui->Mesh_Output->clear();
     Mesh_Process.setCurrentReadChannel(QProcess::StandardOutput);
@@ -49,8 +50,22 @@ void MainWindow::on_Mesh_Button_clicked()
     //   if (process)
     //       ui->Mesh_Output->append(process->readAllStandardOutput());
     Mesh_Process.waitForFinished(-1);
+    */
+    ui->Mesh_Output->clear();
+    ui->Mesh_Error->clear();
+    QStringList args;
+    args << "-case" << QDir::currentPath();
+    QProcess *meshProcess = new QProcess();
+    meshProcess->setCurrentReadChannel(QProcess::StandardError);
+    meshProcess->start("blockMesh",args);
+    meshProcess->waitForFinished();
+    QString output(meshProcess->readAllStandardOutput());
+    QString error(meshProcess->readAllStandardError());
+    if(error == "")
+        error = "No errors!";
+    ui->Mesh_Output->append(output);
+    ui->Mesh_Error->append(error);
 }
-
 
 void MainWindow::on_CheckBleDir_Button_clicked()
 {
